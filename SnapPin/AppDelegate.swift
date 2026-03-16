@@ -31,8 +31,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self?.registerHotkeys()
         }
         
-        // Show settings if needed (first launch / version bump)
-        settingsController.showIfNeeded()
+        // Show settings if needed (first launch / version bump / relaunch after permission change)
+        if CommandLine.arguments.contains("--relaunch-after-permission") {
+            settingsController.forceShow()
+        } else {
+            settingsController.showIfNeeded()
+        }
         
         // Install SIGTERM handler for auto-relaunch after permission changes
         // macOS sends SIGTERM when "Quit & Reopen" is triggered from permission dialogs
@@ -59,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 Thread.sleep(forTimeInterval: 0.5)
                 let task = Process()
                 task.executableURL = URL(fileURLWithPath: "/usr/bin/open")
-                task.arguments = [bundleURL.path]
+                task.arguments = [bundleURL.path, "--args", "--relaunch-after-permission"]
                 try? task.run()
             }
             // Now actually terminate
