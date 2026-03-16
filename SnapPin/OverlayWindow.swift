@@ -4,6 +4,7 @@ import Cocoa
 enum ToolbarAction {
     case cancel
     case pin
+    case save
     case copy
 }
 
@@ -817,7 +818,7 @@ class OverlayView: NSView, NSTextInputClient {
         let dividerW: CGFloat = 12
         
         let toolCount: CGFloat = 4
-        let actionCount: CGFloat = 3
+        let actionCount: CGFloat = 4
         
         let tbW = toolCount * btnW + (toolCount - 1) * spacing
             + dividerW
@@ -895,9 +896,17 @@ class OverlayView: NSView, NSTextInputClient {
         )
         tb.addSubview(pinBtn)
         xOff += btnW + spacing
+
+        let saveBtn = makeToolbarButton(
+            icon: "square.and.arrow.down", tint: .systemBlue,
+            frame: NSRect(x: xOff, y: (tbH - btnH) / 2, width: btnW, height: btnH),
+            action: #selector(toolbarSave)
+        )
+        tb.addSubview(saveBtn)
+        xOff += btnW + spacing
         
         let copyBtn = makeToolbarButton(
-            icon: "doc.on.doc", tint: .systemGreen,
+            icon: "checkmark", tint: .systemGreen,
             frame: NSRect(x: xOff, y: (tbH - btnH) / 2, width: btnW, height: btnH),
             action: #selector(toolbarCopy)
         )
@@ -1092,6 +1101,11 @@ class OverlayView: NSView, NSTextInputClient {
         finishWithAction(.pin)
     }
     
+    @objc private func toolbarSave() {
+        commitTextIfNeeded()
+        finishWithAction(.save)
+    }
+
     @objc private func toolbarCopy() {
         commitTextIfNeeded()
         finishWithAction(.copy)

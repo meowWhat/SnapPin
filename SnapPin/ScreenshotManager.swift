@@ -1,4 +1,5 @@
 import Cocoa
+import UniformTypeIdentifiers
 import ScreenCaptureKit
 
 class ScreenshotManager {
@@ -168,6 +169,18 @@ class ScreenshotManager {
         case .pin:
             DispatchQueue.main.async { [weak self] in
                 self?.pinManager.pinLastScreenshot()
+            }
+        case .save:
+            let savePanel = NSSavePanel()
+            savePanel.allowedContentTypes = [.png]
+            savePanel.nameFieldStringValue = "SnapPin_\(Int(Date().timeIntervalSince1970)).png"
+            savePanel.canCreateDirectories = true
+            if savePanel.runModal() == .OK, let url = savePanel.url {
+                if let tiffData = image.tiffRepresentation,
+                   let bitmapRep = NSBitmapImageRep(data: tiffData),
+                   let pngData = bitmapRep.representation(using: .png, properties: [:]) {
+                    try? pngData.write(to: url)
+                }
             }
         case .copy:
             let pb = NSPasteboard.general

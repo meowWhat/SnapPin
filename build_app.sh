@@ -15,6 +15,9 @@ mkdir -p "${APP_DIR}/Contents/MacOS"
 mkdir -p "${APP_DIR}/Contents/Resources"
 
 # Copy executable
+
+# Copy icon
+cp "/Users/jiahaochen/Downloads/AppIcon.icns" "${APP_DIR}/Contents/Resources/AppIcon.icns"
 cp "${BUILD_DIR}/.build/debug/${APP_NAME}" "${APP_DIR}/Contents/MacOS/${APP_NAME}"
 
 # Create Info.plist
