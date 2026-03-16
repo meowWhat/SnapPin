@@ -80,7 +80,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
         
         if let button = statusItem.button {
-            button.image = NSImage(systemSymbolName: "scissors", accessibilityDescription: "SnapPin")
+            button.image = NSImage(systemSymbolName: "pin.fill", accessibilityDescription: "SnapPin")
             button.image?.size = NSSize(width: 18, height: 18)
         }
         
