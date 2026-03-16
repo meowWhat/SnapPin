@@ -67,7 +67,8 @@ cat > "/tmp/SnapPin.entitlements" << 'ENTITLEMENTS'
 ENTITLEMENTS
 
 # Ad-hoc code sign with entitlements
-codesign --force --deep --sign - --entitlements /tmp/SnapPin.entitlements "${APP_DIR}" 2>&1
+codesign --force --sign - --entitlements /tmp/SnapPin.entitlements "${APP_DIR}/Contents/MacOS/${APP_NAME}" 2>&1
+codesign --force --sign - --entitlements /tmp/SnapPin.entitlements "${APP_DIR}" 2>&1
 
 echo "App bundle created and signed at: ${APP_DIR}"
 echo "You can now run it with: open ${APP_DIR}"

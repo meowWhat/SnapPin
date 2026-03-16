@@ -2,7 +2,7 @@
 set -e
 
 APP_NAME="SnapPin"
-VERSION="1.0.0"
+VERSION="1.2.0"
 DMG_NAME="${APP_NAME}-${VERSION}.dmg"
 DMG_TEMP="temp_dmg"
 DMG_DIR="/Users/jiahaochen/Downloads"
@@ -36,8 +36,6 @@ hdiutil create \
 # Clean up temp
 rm -rf "${DMG_DIR}/${DMG_TEMP}"
 
-# Sign the DMG
-codesign -s - "${DMG_DIR}/${DMG_NAME}" 2>/dev/null || true
 
 echo ""
 echo "=== DMG created successfully ==="
